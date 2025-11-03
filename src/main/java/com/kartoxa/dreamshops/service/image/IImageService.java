@@ -13,7 +13,7 @@ public interface IImageService {
 
     List<Image> getImagesByProductId(Long productId);
 
-    void updateFile(MultipartFile file, Long imageId);
+    Image updateImage(MultipartFile file, Long imageId);
 
     void deleteImage(Long id);
 }

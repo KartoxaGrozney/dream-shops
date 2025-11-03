@@ -56,7 +56,7 @@ public class ImageService implements IImageService{
     }
 
     @Override
-    public void updateFile(MultipartFile file, Long imageId) {
+    public Image updateImage(MultipartFile file, Long imageId) {
 
         if(file.isEmpty()){
             throw new IllegalArgumentException("File is empty");
@@ -83,7 +83,7 @@ public class ImageService implements IImageService{
             throw new RuntimeException("Failed to read file: " + file.getName());
         }
 
-        imageRepository.save(existingImage);
+        return imageRepository.save(existingImage);
     }
 
     @Override
