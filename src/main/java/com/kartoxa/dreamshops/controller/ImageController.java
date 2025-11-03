@@ -40,9 +40,7 @@ public class ImageController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Image> updateImage(
-            @RequestParam MultipartFile file,
-            @PathVariable Long id) {
+    public ResponseEntity<Image> updateImage(@RequestParam MultipartFile file, @PathVariable Long id) {
         return ResponseEntity.ok(imageService.updateImage(file, id));
     }
 
