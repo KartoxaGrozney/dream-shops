@@ -1,5 +1,6 @@
 package com.kartoxa.dreamshops.service.product;
 
+import com.kartoxa.dreamshops.dto.ProductDto;
 import com.kartoxa.dreamshops.model.Product;
 
 import java.util.List;
@@ -27,4 +28,11 @@ public interface IProductService {
     List<Product> getProductsByBrandAndName(String brand, String name);
 
     Long countProductsByBrandAndName(String brand, String name);
+
+    // DTO
+
+    ProductDto getProductDtoById(Long id);
+    List<ProductDto> getAllProductsDto();
+    ProductDto addProductDto(ProductDto productDto);
+    ProductDto updateProductDto(ProductDto productDto, Long productId);
 }
