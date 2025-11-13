@@ -1,6 +1,6 @@
 package com.kartoxa.dreamshops.controller;
 
-import com.kartoxa.dreamshops.model.Category;
+import com.kartoxa.dreamshops.dto.CategoryDto;
 import com.kartoxa.dreamshops.service.category.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,33 +16,34 @@ public class CategoryController {
     private final ICategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories(){
-        List<Category> categories = categoryService.getAllCategories();
+    public ResponseEntity<List<CategoryDto>> getAllCategories() {
+        List<CategoryDto> categories = categoryService.getAllCategoriesDto();
         return ResponseEntity.ok(categories);
     }
 
-    @PostMapping
-    public ResponseEntity<Category> addCategory(@RequestBody Category category){
-        Category newCategory = categoryService.addCategory(category);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newCategory);
-    }
-
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id){
-        Category category = categoryService.getCategoryById(id);
+    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
+        CategoryDto category = categoryService.getCategoryDtoById(id);
         return ResponseEntity.ok(category);
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<CategoryDto> addCategory(@RequestBody CategoryDto categoryDto) {
+        CategoryDto newCategory = categoryService.addCategoryDto(categoryDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newCategory);
+    }
+
     @PutMapping("/update/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category){
-        Category updatedCategory = categoryService.updateCategory(id, category);
+    public ResponseEntity<CategoryDto> updateCategory(
+            @PathVariable Long id,
+            @RequestBody CategoryDto categoryDto) {
+        CategoryDto updatedCategory = categoryService.updateCategoryDto(id, categoryDto);
         return ResponseEntity.ok(updatedCategory);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id){
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
-
 }

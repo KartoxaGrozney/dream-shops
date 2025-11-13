@@ -1,5 +1,6 @@
 package com.kartoxa.dreamshops.controller;
 
+import com.kartoxa.dreamshops.dto.ProductDto;
 import com.kartoxa.dreamshops.model.Product;
 import com.kartoxa.dreamshops.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
@@ -17,26 +18,26 @@ public class ProductController {
     private final IProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts(){
-        List<Product> products = productService.getAllProducts();
+    public ResponseEntity<List<ProductDto>> getAllProducts(){
+        List<ProductDto> products = productService.getAllProductsDto();
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id){
-        Product product = productService.getProductById(id);
+    public ResponseEntity<ProductDto> getProductDtoById(@PathVariable Long id){
+        ProductDto product = productService.getProductDtoById(id);
         return ResponseEntity.ok(product);
     }
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product){
-        Product newProduct = productService.addProduct(product);
+    public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto){
+        ProductDto newProduct = productService.addProductDto(productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        Product updatedProduct = productService.updateProduct(product, id);
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
+        ProductDto updatedProduct = productService.updateProductDto(productDto, id);
         return ResponseEntity.ok(updatedProduct);
     }
 
