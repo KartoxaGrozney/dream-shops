@@ -1,6 +1,8 @@
 package com.kartoxa.dreamshops.service.image;
 
+import com.kartoxa.dreamshops.dto.ImageDto;
 import com.kartoxa.dreamshops.exceptions.ImageNotFoundException;
+import com.kartoxa.dreamshops.mapper.ImageMapper;
 import com.kartoxa.dreamshops.model.Image;
 import com.kartoxa.dreamshops.model.Product;
 import com.kartoxa.dreamshops.repository.ImageRepository;
@@ -19,6 +21,7 @@ public class ImageService implements IImageService{
 
     private final ImageRepository imageRepository;
     private final ProductService productService;
+    private final ImageMapper imageMapper;
 
     @Override
     public Image saveImage(MultipartFile file, Long productId) {
@@ -89,5 +92,17 @@ public class ImageService implements IImageService{
     @Override
     public void deleteImage(Long id) {
         imageRepository.findById(id).ifPresentOrElse(imageRepository::delete, () -> {throw new ImageNotFoundException("Image not found");});
+    }
+
+    //DTO
+
+    public ImageDto getImageDtoById(Long id) {
+        Image image = getImageById(id);
+        return imageMapper.toDto(image);
+    }
+
+    public List<ImageDto> getImagesDtoByProductId(Long productId) {
+        List<Image> images = getImagesByProductId(productId);
+        return imageMapper.toDtoList(images);
     }
 }

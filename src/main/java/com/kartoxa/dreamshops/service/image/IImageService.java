@@ -1,5 +1,6 @@
 package com.kartoxa.dreamshops.service.image;
 
+import com.kartoxa.dreamshops.dto.ImageDto;
 import com.kartoxa.dreamshops.model.Image;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,4 +17,8 @@ public interface IImageService {
     Image updateImage(MultipartFile file, Long imageId);
 
     void deleteImage(Long id);
+
+    ImageDto getImageDtoById(Long id);
+
+    List<ImageDto> getImagesDtoByProductId(Long productId);
 }
