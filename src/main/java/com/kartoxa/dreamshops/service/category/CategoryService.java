@@ -61,7 +61,7 @@ public class CategoryService implements ICategoryService{
     }
 
     public List<CategoryDto> getAllCategoriesDto(){
-        List<Category> categories = categoryRepository.getAll();
+        List<Category> categories = categoryRepository.findAll();
         return categoryMapper.toDtoList(categories);
     }
 

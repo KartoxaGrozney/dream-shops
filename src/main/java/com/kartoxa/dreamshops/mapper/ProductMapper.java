@@ -2,13 +2,18 @@ package com.kartoxa.dreamshops.mapper;
 
 import com.kartoxa.dreamshops.dto.ProductDto;
 import com.kartoxa.dreamshops.model.Product;
+import com.kartoxa.dreamshops.repository.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Component
 public class ProductMapper {
+    private final CategoryRepository categoryRepository;
+
     public ProductDto toDto(Product product){
 
         if(product == null){
@@ -44,14 +49,13 @@ public class ProductMapper {
         }
 
         Product product = new Product();
-
         product.setId(dto.getId());
         product.setName(dto.getName());
         product.setBrand(dto.getBrand());
         product.setPrice(dto.getPrice());
         product.setInventory(dto.getInventory());
         product.setDescription(dto.getDescription());
-
+        product.setCategory(categoryRepository.findByName(dto.getCategoryName()));
         return product;
     }
 
