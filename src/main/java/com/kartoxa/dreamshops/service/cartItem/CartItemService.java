@@ -64,16 +64,16 @@ public class CartItemService implements ICartItemService{
         cartRepository.save(cart);
     }
 
-    @Override
-    public void updateItemQuantity(Long cartId, Long productId, int quantity) {
-
-    }
-
-    @Override
-    public CartItem getCartItem(Long cartId, Long productId) {
-        return null;
-    }
-
+//    @Override
+//    public void updateItemQuantity(Long cartId, Long productId, int quantity) {
+//
+//    }
+//
+//    @Override
+//    public CartItem getCartItem(Long cartId, Long productId) {
+//        return null;
+//    }
+//
 //    @Override
 //    public void updateItemQuantity(Long cartId, Long productId, int quantity) {
 //        Cart cart = cartRepository.findById(cartId)
