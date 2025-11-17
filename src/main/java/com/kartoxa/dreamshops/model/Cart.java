@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -25,8 +26,21 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> items;
 
+    
+    
     public void removeItem(CartItem item) {
         this.items.remove(item);
         item.setCart(null);
+    }
+
+    public BigDecimal getTotalAmount() {
+        return items.stream()
+                .map(CartItem::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public void addItem(CartItem item) {
+        this.items.add(item);
+        item.setCart(this);
     }
 }

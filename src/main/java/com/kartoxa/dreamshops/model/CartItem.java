@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,4 +27,12 @@ public class CartItem {
     private Product product;
 
     private int quantity;
+    private BigDecimal unitPrice;
+
+    public BigDecimal getTotalPrice() {
+        if (unitPrice == null) {
+            return BigDecimal.ZERO;
+        }
+        return unitPrice.multiply(BigDecimal.valueOf(quantity));
+    }
 }

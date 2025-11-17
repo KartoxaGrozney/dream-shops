@@ -1,6 +1,8 @@
 package com.kartoxa.dreamshops.service.cart;
 
+import com.kartoxa.dreamshops.dto.CartDto;
 import com.kartoxa.dreamshops.exceptions.ResourceNotFoundException;
+import com.kartoxa.dreamshops.mapper.CartMapper;
 import com.kartoxa.dreamshops.model.Cart;
 import com.kartoxa.dreamshops.repository.CartItemRepository;
 import com.kartoxa.dreamshops.repository.CartRepository;
@@ -16,6 +18,7 @@ public class CartService implements ICartService{
 
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+    private final CartMapper cartMapper;
 
     @Override
     public Cart getCart(Long id) {
@@ -32,10 +35,17 @@ public class CartService implements ICartService{
         cart.getItems().clear();
         cartRepository.deleteById(id);
     }
-//
-//    @Override
-//    public BigDecimal getTotalPrice(Long id) {
-//        Cart cart = getCart(id);
-//        return cart.getTotalAmount();
-//    }
+
+    @Override
+    public CartDto convertToDto(Cart cart) {
+        return cartMapper.toDto(cart);
+    }
+
+
+    @Override
+    public BigDecimal getTotalPrice(Long id) {
+        Cart cart = getCart(id);
+        return cart.getTotalAmount();
+    }
+
 }

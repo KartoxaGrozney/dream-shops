@@ -35,15 +35,13 @@ public class CartItemService implements ICartItemService{
                 .orElse(new CartItem());
 
         if (cartItem.getId() == null) {
-            cartItem.setCart(cart);
             cartItem.setProduct(product);
             cartItem.setQuantity(quantity);
+            cartItem.setUnitPrice(product.getPrice());
+            cart.addItem(cartItem);
         } else {
             cartItem.setQuantity(cartItem.getQuantity() + quantity);
         }
-
-        cartRepository.addCartItemToCart(cartItem);
-        cartItemRepository.save(cartItem);
         cartRepository.save(cart);
     }
 
