@@ -48,4 +48,10 @@ public class CartService implements ICartService{
         return cart.getTotalAmount();
     }
 
+    @Override
+    public Cart getCartByUserId(Long userId) {
+        Cart cart = cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found by user"));
+        return cartRepository.save(cart);
+    }
 }

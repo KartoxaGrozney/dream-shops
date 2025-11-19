@@ -10,4 +10,6 @@ public interface ICartService {
     void clearCart(Long id);
     BigDecimal getTotalPrice(Long id);
     CartDto convertToDto(Cart cart);
+    Cart getCartByUserId(Long userId);
+
 }
