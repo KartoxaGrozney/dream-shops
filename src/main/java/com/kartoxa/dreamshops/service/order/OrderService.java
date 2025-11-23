@@ -3,13 +3,13 @@ package com.kartoxa.dreamshops.service.order;
 import com.kartoxa.dreamshops.dto.OrderDto;
 import com.kartoxa.dreamshops.enums.OrderStatus;
 import com.kartoxa.dreamshops.exceptions.ResourceNotFoundException;
+import com.kartoxa.dreamshops.mapper.OrderMapper;
 import com.kartoxa.dreamshops.model.Cart;
 import com.kartoxa.dreamshops.model.Order;
 import com.kartoxa.dreamshops.model.OrderItem;
 import com.kartoxa.dreamshops.model.Product;
 import com.kartoxa.dreamshops.repository.OrderRepository;
 import com.kartoxa.dreamshops.repository.ProductRepository;
-import com.kartoxa.dreamshops.repository.UserRepository;
 import com.kartoxa.dreamshops.service.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,9 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService implements IOrderService{
     private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
     private final CartService cartService;
     private final ProductRepository productRepository;
+    private final OrderMapper orderMapper;
 
     @Override
     public Order placeOrder(Long cartId) {
@@ -77,21 +77,22 @@ public class OrderService implements IOrderService{
     @Override
     public OrderDto getOrder(Long orderId) {
         return orderRepository.findById(orderId)
-                .map(this::convertToDto)
+                .map(orderMapper::orderToOrderDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
     }
+
+//    @Override
+//    public List<OrderDto> getUserOrders(Long userId) {
+//        List<Order> orders = orderRepository.findByUserId(userId);
+//        return orders.stream()
+//                .map(this::convertToDto)
+//                .toList();
+//    }
 
     @Override
     public List<OrderDto> getUserOrders(Long userId) {
         List<Order> orders = orderRepository.findByUserId(userId);
-        return orders.stream()
-                .map(this::convertToDto)
-                .toList();
-    }
-
-    private OrderDto convertToDto(Order order) {
-        // Реализация через маппер (создадим позже)
-        return new OrderDto();
+        return orderMapper.ordersToOrderDtos(orders); // Преобразуем список
     }
 }
 
